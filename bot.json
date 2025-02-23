@@ -1,0 +1,902 @@
+{
+  "version": "1.13",
+  "settings": {
+    "defaultLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "description": "",
+    "id": "0a8f6ee2-635f-425c-a506-a4c8c6476757",
+    "inactivityTimeout": 30,
+    "botVariables": [],
+    "userVariables": [],
+    "nodeRepetitionLimit": 3,
+    "configVariables": {},
+    "cognitiveConfigs": {
+      "openAi": {}
+    },
+    "useLlmz": true,
+    "defaultBestModel": "openai__gpt-4o-2024-08-06",
+    "defaultFastModel": "openai__gpt-4o-mini-2024-07-18",
+    "useClient": true,
+    "llmzVersion": "01-Oct-2024",
+    "autonomousModel": "openai__gpt-4o-2024-08-06"
+  },
+  "flows": [
+    {
+      "id": "wf-error",
+      "name": "Error",
+      "startNode": "nd-98dc0bcc87",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-1cb5862648",
+          "source": "nd-98dc0bcc87",
+          "sourcePort": "trs-02c7129430",
+          "target": "nd-58fca56e01"
+        },
+        {
+          "id": "edg-1c28c96d6a",
+          "source": "nd-58fca56e01",
+          "sourcePort": "nd-58fca56e01",
+          "target": "nd-e05f59dd66"
+        }
+      ],
+      "nodes": [
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⛔️ When something goes wrong</span></strong></p><p><br>This workflow is executed when there's an <strong>unexpected error</strong> in one of the other workflows.</p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-8ff3d7d295",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 401,
+          "x": 90,
+          "y": -45
+        },
+        {
+          "instructions": [
+            {
+              "id": "ins-2762f70004",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "staticValue": "Sorry, an error occurred. Please try again later",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-58fca56e01",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-e05f59dd66"
+          },
+          "type": "standard",
+          "id": "nd-58fca56e01",
+          "name": "Handler",
+          "deletable": true,
+          "x": 450,
+          "y": 120
+        },
+        {
+          "id": "nd-98dc0bcc87",
+          "name": "On_Error",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-02c7129430",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-58fca56e01"
+              },
+              "transitions": [],
+              "nodeId": "nd-98dc0bcc87"
+            }
+          ],
+          "x": 90,
+          "y": 120
+        },
+        {
+          "id": "nd-e05f59dd66",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-945140a646",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-e05f59dd66"
+            }
+          ],
+          "x": 810,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "id": "wf-timeout",
+      "name": "Timeout",
+      "startNode": "nd-9f7f3268ac",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-b0d2adcd13",
+          "source": "nd-e6c012a652",
+          "sourcePort": "nd-e6c012a652",
+          "target": "nd-199fdcf439"
+        },
+        {
+          "id": "edg-6d17a0591b",
+          "source": "nd-9f7f3268ac",
+          "sourcePort": "trs-0c7a9a0003",
+          "target": "nd-e6c012a652"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-199fdcf439"
+          },
+          "type": "standard",
+          "id": "nd-e6c012a652",
+          "name": "Handler",
+          "deletable": true,
+          "x": 435,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⌛️ When conversation times out</span></strong></p><p><br>This workflow is executed when the conversation <strong>times out</strong> before it had time to flow to an <strong>End Node</strong>.</p><p></p><p>The <strong>Timeout Delay</strong> is configurable in the <strong>Chatbot Settings.</strong></p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-441efa6c42",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 173,
+          "width": 401,
+          "x": 105,
+          "y": -90
+        },
+        {
+          "id": "nd-9f7f3268ac",
+          "name": "On_Timeout",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-0c7a9a0003",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-e6c012a652"
+              },
+              "transitions": []
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-199fdcf439",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-bf76943d55",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": []
+            }
+          ],
+          "x": 795,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "id": "wf-conversation-end",
+      "name": "Conversation End",
+      "startNode": "nd-c0d3bd2c92",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-3cb8028ff6",
+          "source": "nd-c0d3bd2c92",
+          "sourcePort": "trs-92c6f93b0c",
+          "target": "nd-2db7499cc6"
+        },
+        {
+          "id": "edg-8a88f687a0",
+          "source": "nd-2db7499cc6",
+          "sourcePort": "nd-2db7499cc6",
+          "target": "nd-d0c2a6be81"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-d0c2a6be81"
+          },
+          "type": "standard",
+          "id": "nd-2db7499cc6",
+          "name": "Handler",
+          "deletable": true,
+          "x": 420,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">👋 Before Conversation Ends</span></strong></p><p><br>This workflow is executed when right before the conversation <strong>Ends Explicitly.</strong></p><p></p><p>An <strong>Explicit Ending</strong> happens when a workflow transitions on an <strong>End Node</strong>.</p>",
+          "type": "comment",
+          "id": "nd-6d5d3f41dd",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 461,
+          "x": 105,
+          "y": -45
+        },
+        {
+          "id": "nd-c0d3bd2c92",
+          "name": "On_Explicit_Ending",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-92c6f93b0c",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-2db7499cc6"
+              },
+              "transitions": []
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-d0c2a6be81",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-7004dbb2b6",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": []
+            }
+          ],
+          "x": 780,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "topicId": "tpc-global",
+      "id": "wf-main",
+      "name": "Main",
+      "startNode": "nd-2bb9db230d",
+      "variables": [],
+      "links": [],
+      "nodes": [
+        {
+          "id": "nd-2bb9db230d",
+          "name": "Start",
+          "type": "start",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-8b0779edc5",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-54aa0c19de"
+              },
+              "transitions": [],
+              "nodeId": "nd-2bb9db230d"
+            }
+          ],
+          "x": -105,
+          "y": -180,
+          "kbPriority": {
+            "enabled": false,
+            "searchScope": "specific",
+            "kbs": []
+          }
+        },
+        {
+          "id": "nd-80ac4ff158",
+          "name": "End",
+          "type": "end",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-0260f5e672",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-80ac4ff158"
+            }
+          ],
+          "x": 420,
+          "y": -60
+        },
+        {
+          "type": "autonomous",
+          "deletable": true,
+          "x": 90,
+          "y": -240,
+          "instructions": [
+            {
+              "id": "ins-ace8f62866",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Web Search",
+              "category": "Execute",
+              "integrationId": "browser",
+              "actionName": "webSearch",
+              "nodeId": "nd-54aa0c19de",
+              "includeSites": {
+                "valueType": "static",
+                "staticValue": [],
+                "dynamicValue": ""
+              },
+              "manualFields": [
+                "browsePages"
+              ],
+              "query": "",
+              "count": {
+                "valueType": "static",
+                "staticValue": 10,
+                "dynamicValue": ""
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-1465ce0650",
+              "agentId": "KnowledgeAgent",
+              "toolId": "knowledge-query",
+              "toolType": "search",
+              "type": "autonomous",
+              "label": "Search Knowledge Bases",
+              "category": "Knowledge Bases",
+              "nodeId": "nd-54aa0c19de",
+              "transitions": [],
+              "description": "Searches for information in the official knowledge bases.",
+              "kbs": {
+                "valueType": "static",
+                "staticValue": []
+              },
+              "advanced": {
+                "mode": "breadcrumb",
+                "contextDepth": 2,
+                "maxTokens": 20
+              }
+            }
+          ],
+          "id": "nd-54aa0c19de",
+          "name": "AutonomousNode",
+          "writableVariables": [],
+          "allowConversation": true,
+          "guidelines": {
+            "valueType": "dynamic",
+            "dynamicValue": "You are an Autonomous Agent. You only search the freechurch.life website and look for answers in the knowledge base."
+          }
+        },
+        {
+          "type": "comment",
+          "deletable": true,
+          "x": 75,
+          "y": -435,
+          "instructions": [],
+          "comment": "<p>This is the default node. It can search the web.</p><p></p><p>Change instructions and add new sub-workflows to start changing its behaviour.</p><p></p><p>Try asking \"What's Botpress?\"</p>",
+          "id": "nd-9c5f9a0939",
+          "name": "Comment1",
+          "height": 163,
+          "width": 296
+        },
+        {
+          "type": "video",
+          "deletable": true,
+          "instructions": [],
+          "x": -465,
+          "y": -555,
+          "youtubeUrl": "https://www.youtube.com/watch?v=Hyq_Bwn2W5M",
+          "id": "nd-0a8441430e",
+          "name": "Video1"
+        }
+      ],
+      "parentFolder": "root"
+    }
+  ],
+  "intents": [
+    {
+      "id": "int-cancel",
+      "name": "cancel",
+      "utterances_with_slots": [
+        "cancel",
+        "abort",
+        "abandon",
+        "i want to cancel",
+        "forget about this",
+        "leave",
+        "stop",
+        "quit",
+        "you know what, nevermind",
+        "forget it"
+      ]
+    },
+    {
+      "id": "int-no",
+      "name": "no",
+      "utterances_with_slots": [
+        "no",
+        "i don't want to",
+        "absolutely not",
+        "nah",
+        "nope",
+        "not really",
+        "not sure",
+        "no thanks"
+      ]
+    },
+    {
+      "id": "int-yes",
+      "name": "yes",
+      "utterances_with_slots": [
+        "yes",
+        "yeah",
+        "absolutely",
+        "i'd like to",
+        "sure ",
+        "hmm probably",
+        "yup",
+        "ok"
+      ]
+    }
+  ],
+  "list_entities": [],
+  "pattern_entities": [],
+  "actions": [],
+  "hooks": [
+    {
+      "id": "hk-1wnbr9q",
+      "name": "knowledge-base-table-of-content",
+      "hookType": "before_llmz_execution",
+      "content": "\n// >>>>>>>>>>>>>>>>>>>>>>\n// This hook is generated and managed by the \"agi/kbo\" integration.\n// This hook provides your autonomous nodes with a Table of Contents of the included knowledge of\n// the knowledge bases used in your autonomous nodes (those included on the `search` tool).\n// Do not edit this file manually.\n\nconst searchTools = context.tools.filter((x) => x.name === 'search')\n\nawait Promise.allSettled(searchTools.map(appendSearchToolTableOfContent))\n\nasync function appendSearchToolTableOfContent(search: LLMZ.Tool) {\n  type SearchMetadata = { kbs: string[]; searchScope: 'all' | 'specific' }\n  const meta: SearchMetadata = search.metadata?.kbs ?? {\n    kbs: [],\n    searchScope: 'all'\n  }\n\n  const kbs = meta.searchScope === 'specific' ? meta.kbs : Artifact.knowledge_base.map((x) => x.id)\n\n  const passages = await Promise.allSettled(\n    kbs.map((kbId) =>\n      client.searchFiles({\n        query: event.preview,\n        consolidate: true,\n        contextDepth: 2,\n        limit: 2,\n        tags: {\n          purpose: 'master-summary',\n          kbId\n        }\n      })\n    )\n  ).then((x) => x.flatMap((y) => (y.status === 'fulfilled' ? y.value.passages.map((p) => p.content) : [])))\n\n  if (passages.length) {\n    context.instructions += `## Table of Contents (for tool \\`${search.name}\\`)\n\nThe below is a summary of the knowledge included in the Knowledge Bases (available to you when calling \\`${search.name}\\` tool).\n\n${passages.join('\\n\\n')}\n\n`\n  }\n}\n\n// End of the hook\n// <<<<<<<<<<<<<<<<<<<<\n",
+      "title": "Knowledge Base Table of Content",
+      "description": "Provides a table of content for the enabled Knowledge Bases on the active autonomous nodes.",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/kbo",
+          "name": "agi/kbo",
+          "version": "1.0.3"
+        }
+      }
+    },
+    {
+      "id": "hk-ml1yq",
+      "name": "conversation-analyzer-track-conversation",
+      "hookType": "after_conversation_end",
+      "content": "\n// >>>>>>>>>>>>>>>>>>>>>>\n// This hook is generated and managed by the \"agi/connor\" integration.\n// This hook tracks your conversations to provide some useful analytics on them. See the Int_Connor_Conversations_Table\n// Do not edit this file manually.\n\n   const { success, error } = await actions['agi/connor'].addOrUpdateConversation({\n    conversationId: event.conversationId,\n    transcript: event.state.session.history.length\n      ? event.state.session.history.map((h) => ({ sender: h.sender, preview: h.preview }))\n      : [{ sender: 'user', preview: event.preview }]\n  })\n\n// End of the hook\n// <<<<<<<<<<<<<<<<<<<<\n",
+      "title": "Track Conversation",
+      "description": "Tracks conversations in a Botpress table for analysis",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/connor",
+          "name": "agi/connor",
+          "version": "0.1.0"
+        }
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  const { success, error } = await actions[\"agi/connor\"].addOrUpdateConversation({\n    conversationId: event.conversationId,\n    transcript: event.state.session.history.length ? event.state.session.history.map((h) => ({ sender: h.sender, preview: h.preview })) : [{ sender: \"user\", preview: event.preview }]\n  });\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    }
+  ],
+  "qnas": [],
+  "knowledge_base": [
+    {
+      "dataSources": [
+        {
+          "created_on": 1722900679385,
+          "data": {},
+          "disabled": false,
+          "id": "ds-529bb979ed",
+          "type": "file-api"
+        },
+        {
+          "created_on": 1738831389609,
+          "data": {
+            "crawlFrequency": "monthly",
+            "cronSchedule": "50 10 6 * *",
+            "indexingJobs": [
+              "0a8f6ee2-635f-425c-a506-a4c8c6476757-01JKD6TS4F3H2Z3X8E4FVDCP2N"
+            ],
+            "pages": []
+          },
+          "disabled": false,
+          "id": "ds-e03faf1921",
+          "title": "www.freechurch.life",
+          "type": "web-page"
+        }
+      ],
+      "description": "This is about New KB1",
+      "id": "kb-2f0a7ea639",
+      "name": "Default Knowledge Base",
+      "parentFolder": "root"
+    }
+  ],
+  "folders": [],
+  "agents": {
+    "SummaryAgent": {
+      "enabled": true,
+      "config": {
+        "summaryMaxTokens": 100
+      }
+    },
+    "TranslatorAgent": {
+      "config": {
+        "detectLanguage": true
+      }
+    },
+    "KnowledgeAgent": {
+      "enabled": true,
+      "config": {
+        "answerManually": true,
+        "context": "Summary of the conversation:\n\"\"\"\n{{conversation.SummaryAgent.summary}}\n\"\"\"\n\nTranscript:\n\"\"\"\n{{conversation.SummaryAgent.transcript}}\n\"\"\"",
+        "bestModel": "gpt-4-turbo",
+        "strategy": "hybrid",
+        "chunks": 50
+      }
+    },
+    "PersonalityAgent": {
+      "config": {
+        "personality": ""
+      }
+    },
+    "VisionAgent": {
+      "enabled": true,
+      "config": {
+        "extractionEnabled": true
+      }
+    }
+  },
+  "tables": {
+    "table_01JKD6SE0M40H4X997K9EWSPN5": {
+      "id": "table_01JKD6SE0M40H4X997K9EWSPN5",
+      "name": "RouterAgentTable",
+      "factor": 1,
+      "frozen": false,
+      "tags": {
+        "role": "agents/router/intents",
+        "agent": "RouterAgent",
+        "system": "true"
+      },
+      "createdAt": "2025-02-06T08:42:25.688Z",
+      "updatedAt": "2025-02-06T08:42:25.688Z",
+      "createdBy": "user:8ea9a5c4-df0a-49ef-a6e5-5bf6fd82b323",
+      "updatedBy": null,
+      "isComputeEnabled": false,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "phrase",
+          "intentId",
+          "phraseId"
+        ],
+        "properties": {
+          "phrase": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "searchable": true
+            }
+          },
+          "intentId": {
+            "type": "string",
+            "x-zui": {
+              "index": 1,
+              "searchable": true
+            }
+          },
+          "phraseId": {
+            "type": "string",
+            "x-zui": {
+              "index": 2,
+              "searchable": true
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    },
+    "table_01JKD6SGMFKB5NFCARW0P472DA": {
+      "id": "table_01JKD6SGMFKB5NFCARW0P472DA",
+      "name": "Int_Connor_Conversations_Table",
+      "factor": 30,
+      "frozen": true,
+      "tags": {
+        "origin": "integration",
+        "purpose": "Conversations",
+        "version": "Dec-2024",
+        "integration": "Int_connor",
+        "x-studio-icon": "lucide://MessagesSquare",
+        "x-studio-color": "grass",
+        "x-studio-title": "Conversations",
+        "x-studio-readonly": "true",
+        "x-studio-description": "Table for analyzing conversations"
+      },
+      "createdAt": "2025-02-06T08:42:28.372Z",
+      "updatedAt": "2025-02-06T08:42:28.372Z",
+      "createdBy": "integration:agi/connor",
+      "updatedBy": null,
+      "isComputeEnabled": true,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "conversationId",
+          "transcript",
+          "summary",
+          "topics",
+          "escalations",
+          "resolved"
+        ],
+        "properties": {
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "x-zui": {}
+            },
+            "x-zui": {
+              "index": 4,
+              "title": "Topics",
+              "computed": {
+                "action": "ai",
+                "prompt": "Identify the topics mentioned by the user in the provided transcript. Focus only on user-initiated topics relevant to their needs (e.g., billing issues, technical troubleshooting, product recommendations, account setup, feature requests, complaints, or cancellation inquiries). \nTranscript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. An array of topics or themes discussed during the conversation."
+          },
+          "summary": {
+            "type": "string",
+            "x-zui": {
+              "index": 2,
+              "title": "Summary",
+              "computed": {
+                "action": "ai",
+                "prompt": "Summarize the provided transcript.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "A brief summary of the conversation's content."
+          },
+          "resolved": {
+            "type": "boolean",
+            "x-zui": {
+              "index": 6,
+              "title": "Resolved",
+              "computed": {
+                "action": "ai",
+                "prompt": "Based on the transcript decide whether the users queries were resolved or not by the end of the chat. If not resolved respond with `false`.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "A boolean indicating whether the customer's issue was resolved by the end of the chat."
+          },
+          "sentiment": {
+            "enum": [
+              "very positive",
+              "positive",
+              "neutral",
+              "negative",
+              "very negative"
+            ],
+            "type": "string",
+            "x-zui": {
+              "index": 3,
+              "title": "Sentiment",
+              "computed": {
+                "action": "ai",
+                "prompt": "Based on the transcript decide the overall sentiment inferred from the conversation (from the following - very positive, positive, neutral, negative, very negative).\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. The overall sentiment inferred from the conversation (e.g., positive, neutral, negative)."
+          },
+          "transcript": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "x-zui": {},
+              "required": [
+                "sender",
+                "preview"
+              ],
+              "properties": {
+                "sender": {
+                  "enum": [
+                    "bot",
+                    "user"
+                  ],
+                  "type": "string",
+                  "x-zui": {}
+                },
+                "preview": {
+                  "type": "string",
+                  "x-zui": {}
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-zui": {
+              "index": 1,
+              "title": "Transcript",
+              "searchable": true
+            },
+            "description": "The transcript of the conversation, represented as an array of message items."
+          },
+          "escalations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "x-zui": {}
+            },
+            "x-zui": {
+              "index": 5,
+              "title": "Escalations",
+              "computed": {
+                "action": "ai",
+                "prompt": "Extract the escalations from the provided transcript. An array representing moments when the conversation was escalated to another team member or department.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. An array representing moments when the conversation was escalated to another team member or department."
+          },
+          "conversationId": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "title": "Conversation ID",
+              "searchable": true
+            },
+            "description": "A unique identifier for this specific chat session."
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    }
+  },
+  "schemas": [],
+  "versions": [
+    {
+      "name": "20 Feb 25 07:08",
+      "id": "version_01JMGW3TP4VFH0149ZFD2RPXAF"
+    },
+    {
+      "name": "20 Feb 25 07:07",
+      "id": "version_01JMGW24NW028S5WSZ06D27H3F"
+    },
+    {
+      "name": "20 Feb 25 07:06",
+      "id": "version_01JMGW0NFJYBZ56TB99MZ7277E"
+    }
+  ],
+  "revision": 39,
+  "revisionMetadata": {
+    "lastRevisionCheckAt": "2025-02-23T15:05:51.532Z",
+    "lastRevisionId": -1,
+    "multiplayerStatus": "connected",
+    "multiplayerTraces": [
+      "2025-02-23T15:05:55.147Z: initialized -> connecting (ok)",
+      "2025-02-23T15:06:00.139Z (Ak2RMOtuxy): connecting -> connected (ok)"
+    ],
+    "players": [
+      "cworking11@gmail.com / sess_01JMSNFQKC6HC16J99NN86830Z / Sun, 23 Feb 2025 15:06:00 GMT"
+    ],
+    "savedAt": "2025-02-23T15:06:08.746Z",
+    "savedBy": "cworking11@gmail.com",
+    "sessionId": "sess_01JMSNFQKC6HC16J99NN86830Z"
+  },
+  "identity": {
+    "name": "FreeChurchBot",
+    "manual_instructions": "You are FreeChurchBot, an Autonomous Agent designed to search the freechurch.life website for answers in the knowledge base. Your primary role is to provide accurate information based on the content available on that site. Focus on delivering concise and relevant responses to user inquiries. The intended audience is anyone who prompts queries regarding Christianity or Free Church towards you.\nYou are for built for the charitable spirit of the community, The name of the community is Free Church.",
+    "icon": {
+      "type": "emoji",
+      "emoji": "🤖 ",
+      "background_color": "var(--orange-5)"
+    },
+    "ai_summary": {
+      "value": "FreeChurchBot provides information on Christianity.",
+      "input_hash": "wt2ynr",
+      "generated_at": "2025-02-06T09:07:30.250Z",
+      "version": "1.0.0"
+    }
+  }
+}

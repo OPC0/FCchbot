@@ -1,0 +1,21 @@
+window.botpress.init({
+  "botId": "0a8f6ee2-635f-425c-a506-a4c8c6476757",
+  "configuration": {
+    "botName": "FreeChurchbot",
+    "botAvatar": "https://files.bpcontent.cloud/2025/02/20/04/20250220045622-KAAC8TQH.png",
+    "botDescription": "I am FREEChurchBot.\n\nI am built for the charitable spirit of the community!\n\nFeel FREE to ask any questions!",
+    "website": {},
+    "email": {},
+    "phone": {},
+    "termsOfService": {},
+    "privacyPolicy": {},
+    "color": "#3B82F6",
+    "variant": "solid",
+    "themeMode": "light",
+    "fontFamily": "inter",
+    "radius": 2.5,
+    "additionalStylesheetUrl": "https://files.bpcontent.cloud/2025/02/20/05/20250220051520-VXMTAHSQ.css",
+    "allowFileUpload": true
+  },
+  "clientId": "14cea862-4c47-4a88-aa4c-0a3c58023d87"
+});
